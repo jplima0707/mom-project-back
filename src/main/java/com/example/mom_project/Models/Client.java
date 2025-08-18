@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.mom_project.Models.ValueObjects.Email;
+import com.example.mom_project.Models.ValueObjects.PhoneNumber;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,11 +35,13 @@ public class Client {
     @Column(nullable=false, length = 255)
     private String name;
 
-    @Column(nullable = false, length = 15)
-    private String phone;
+    @Column(nullable = false, length = 15, name = "phone")
+    @Embedded
+    private PhoneNumber phone;
 
-    @Column(length = 90)
-    private String email;
+    @Column(length = 90, name = "email")
+    @Embedded
+    private Email email;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -48,10 +54,10 @@ public class Client {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Client() {
+    protected Client() {
     }
 
-    public Client(String name, String phone, String email, Date birthDate, String address, User user) {
+    public Client(String name, PhoneNumber phone, Email email, Date birthDate, String address, User user) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -73,19 +79,19 @@ public class Client {
         this.name = name;
     }
 
-    public String getPhone() {
+    public PhoneNumber getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(PhoneNumber phone) {
         this.phone = phone;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 

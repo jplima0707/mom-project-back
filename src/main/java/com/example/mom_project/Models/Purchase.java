@@ -42,7 +42,7 @@ public class Purchase {
     @Column(length = 20)
     private String paymentMethod;
 
-    public Purchase() {
+    protected Purchase() {
     }
 
     public Purchase(Client client, double value, Date createdDate, String paymentMethod) {

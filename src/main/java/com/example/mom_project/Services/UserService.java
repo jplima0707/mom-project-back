@@ -16,8 +16,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDTO> getAllUsersDTO() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUsersDTO'");
+       return userRepository.findAll().stream().map(user -> new UserDTO(user.getId(), user.getName(), user.getEmail())).collect(Collectors.toList());
     }
 
     @Override
