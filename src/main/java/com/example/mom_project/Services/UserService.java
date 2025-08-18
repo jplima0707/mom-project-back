@@ -1,6 +1,7 @@
 package com.example.mom_project.Services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,6 +9,7 @@ import com.example.mom_project.DTOs.UserCreateDTO;
 import com.example.mom_project.DTOs.UserDTO;
 import com.example.mom_project.Models.User;
 import com.example.mom_project.Repositories.UserRepository;
+import com.example.mom_project.Mappers.UserMapper;
 
 public class UserService implements IUserService {
 
@@ -16,37 +18,46 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDTO> getAllUsersDTO() {
-       return userRepository.findAll().stream().map(user -> new UserDTO(user.getId(), user.getName(), user.getEmail())).collect(Collectors.toList());
+       return userRepository.findAll().stream().map(UserMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public List<User> getAllUsers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUsers'");
+        return userRepository.findAll();
     }
 
     @Override
     public User getUserById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserById'");
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
     public UserDTO deleteUser(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            userRepository.delete(user);
+            return UserMapper.toDTO(user);
+        }
+        return null;
     }
 
     @Override
     public List<User> createUser(UserCreateDTO userCreateDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
+        User user = UserMapper.toEntity(userCreateDTO);
+        userRepository.save(user);
+        return userRepository.findAll();
     }
 
     @Override
     public User updateUser(Long id, UserCreateDTO userCreateDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+        User existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser != null) {
+            User updatedUser = UserMapper.toEntity(userCreateDTO);
+            updatedUser.setId(existingUser.getId());
+            userRepository.save(updatedUser);
+            return updatedUser;
+        }
+        return null;
     }
     
 }

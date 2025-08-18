@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mom_project.Models.ValueObjects.Email;
+import com.example.mom_project.Models.ValueObjects.Password;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -30,16 +31,17 @@ public class User {
     @Column(nullable = false, unique = true, length = 100, name = "email")
     private Email email;
 
-    @Column(nullable=false, length = 255)
-    private String password;
+    @Column(nullable=false, length = 255, name = "password")
+    @Embedded
+    private Password password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Client> clients;
 
-    protected User() {
+    public User() {
     }
 
-    public User(String name, Email email, String password) {
+    public User(String name, Email email, Password password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -48,6 +50,10 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -66,11 +72,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         this.password = password;
     }
 
