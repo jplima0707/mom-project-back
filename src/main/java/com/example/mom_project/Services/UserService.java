@@ -35,12 +35,9 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO deleteUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            userRepository.delete(user);
-            return UserMapper.toDTO(user);
-        }
-        return null;
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        userRepository.delete(user);
+        return UserMapper.toDTO(user);
     }
 
     @Override
@@ -52,14 +49,11 @@ public class UserService implements IUserService {
 
     @Override
     public User updateUser(Long id, UserCreateDTO userCreateDTO) {
-        User existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser != null) {
-            User updatedUser = UserMapper.toEntity(userCreateDTO);
-            updatedUser.setId(existingUser.getId());
-            userRepository.save(updatedUser);
-            return updatedUser;
-        }
-        return null;
+        User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User updatedUser = UserMapper.toEntity(userCreateDTO);
+        updatedUser.setId(existingUser.getId());
+        userRepository.save(updatedUser);
+        return updatedUser;
     }
     
 }

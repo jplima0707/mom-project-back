@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.mom_project.DTOs.UserDTO;
+import com.example.mom_project.Models.ValueObjects.PositiveNumber;
 import com.example.mom_project.Services.IUserService;
 
 @RestController
@@ -34,10 +36,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
-
-
+    public ResponseEntity<UserDTO> getUserById(@PathVariable PositiveNumber id) {
+        return ResponseEntity.ok(userService.getUserById(id.getValue()));
     }
 
 }
