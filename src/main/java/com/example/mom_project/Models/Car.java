@@ -1,14 +1,20 @@
 package com.example.mom_project.Models;
 
+import com.example.mom_project.Models.ValueObjects.Plate;
+import com.example.mom_project.Models.ValueObjects.Year;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "Cars")
 public class Car {
     
     @Id
@@ -19,11 +25,11 @@ public class Car {
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
-    @Column(nullable=false)
-    private int year;
+    @Embedded
+    private Year year;
 
-    @Column(nullable=true, length=10)
-    private String plate;
+    @Embedded
+    private Plate plate;
 
     @Column(nullable=false, length=60)
     private String brand;
@@ -33,11 +39,11 @@ public class Car {
 
     @Column(nullable=true, length = 255)
     private String extra;
-    
-    public Car() {
+
+    protected Car() {
     }
 
-    public Car(int year, String plate, String brand, String state, String extra) {
+    public Car(Year year, Plate plate, String brand, String state, String extra) {
         this.year = year;
         this.plate = plate;
         this.brand = brand;
@@ -57,19 +63,19 @@ public class Car {
         this.purchase = purchase;
     }
 
-    public int getYear() {
+    public Year getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Year year) {
         this.year = year;
     }
 
-    public String getPlate() {
+    public Plate getPlate() {
         return plate;
     }
 
-    public void setPlate(String plate) {
+    public void setPlate(Plate plate) {
         this.plate = plate;
     }
 

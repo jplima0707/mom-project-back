@@ -13,10 +13,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
+@Table(name = "Purchases")
 public class Purchase {
     
     @Id
@@ -40,7 +42,7 @@ public class Purchase {
     @Column(length = 20)
     private String paymentMethod;
 
-    public Purchase() {
+    protected Purchase() {
     }
 
     public Purchase(Client client, double value, Date createdDate, String paymentMethod) {

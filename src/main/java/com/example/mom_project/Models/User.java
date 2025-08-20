@@ -3,8 +3,12 @@ package com.example.mom_project.Models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.mom_project.Models.ValueObjects.Email;
+import com.example.mom_project.Models.ValueObjects.Password;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,11 +27,11 @@ public class User {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
+    @Embedded
+    private Email email;
 
-    @Column(nullable=false, length = 255)
-    private String password;
+    @Embedded
+    private Password password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Client> clients;
@@ -35,7 +39,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String password) {
+    public User(String name, Email email, Password password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -46,6 +50,10 @@ public class User {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,19 +62,19 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         this.password = password;
     }
 
