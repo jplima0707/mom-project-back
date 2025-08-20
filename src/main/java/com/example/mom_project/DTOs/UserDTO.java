@@ -1,9 +1,11 @@
 package com.example.mom_project.DTOs;
 
+import com.example.mom_project.Models.ValueObjects.Email;
+
 public class UserDTO {
     private Long id;
     private String name;
-    private String email;
+    private Email email;
 
     public Long getId() {
         return id;
@@ -13,7 +15,20 @@ public class UserDTO {
         return name;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
 }
