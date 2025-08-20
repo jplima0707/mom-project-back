@@ -1,8 +1,12 @@
 package com.example.mom_project.Models.ValueObjects;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class PositiveNumber {
 
-    private final Long value;
+    private Long value;
+
+    protected PositiveNumber(){}
 
     public PositiveNumber(Long value) {
         if (value < 0) {
@@ -11,6 +15,7 @@ public class PositiveNumber {
         this.value = value;
     }
 
+    @JsonValue
     public Long getValue() {
         return value;
     }

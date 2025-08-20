@@ -28,10 +28,8 @@ public class User {
     private String name;
 
     @Embedded
-    @Column(nullable = false, unique = true, length = 100, name = "email")
     private Email email;
 
-    @Column(nullable=false, length = 255, name = "password")
     @Embedded
     private Password password;
 

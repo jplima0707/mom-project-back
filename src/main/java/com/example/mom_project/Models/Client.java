@@ -35,11 +35,9 @@ public class Client {
     @Column(nullable=false, length = 255)
     private String name;
 
-    @Column(nullable = false, length = 15, name = "phone")
     @Embedded
     private PhoneNumber phone;
 
-    @Column(length = 90, name = "email")
     @Embedded
     private Email email;
 

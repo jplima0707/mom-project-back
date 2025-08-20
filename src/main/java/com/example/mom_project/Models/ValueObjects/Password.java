@@ -1,26 +1,46 @@
 package com.example.mom_project.Models.ValueObjects;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class Password {
-    private String value;
 
-    public Password(String value) {
-        validatePassword(value);
-        this.value = value;
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    protected Password(){}
+
+    public Password(String password) {
+        validatePassword(password);
+        this.password = encrypt(password);
     }
 
-    public String getValue() {
-        return value;
+    @JsonValue
+    public String getPassword() {
+        return password;
     }
 
-    private void validatePassword(String value) {
-        if (value == null || value.trim().isEmpty()) {
+    private void validatePassword(String password) {
+        if (password == null || password.trim().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
-        if (value.length() < 8) {
+        if (password.length() < 8) {
             throw new IllegalArgumentException("Password must be at least 8 characters long");
         }
+    }
+
+    private String encrypt(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(rawPassword);
+    }
+
+    public boolean matches(String rawPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(rawPassword, this.password);
     }
 }

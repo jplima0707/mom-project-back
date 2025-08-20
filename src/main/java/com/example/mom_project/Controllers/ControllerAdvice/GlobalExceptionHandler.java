@@ -1,4 +1,4 @@
-package com.example.mom_project.Controllers;
+package com.example.mom_project.Controllers.ControllerAdvice;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.example.mom_project.DTOs.ErrorResponse;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(IllegalArgumentException ex) {
+    public ResponseEntity<ErrorResponse> handleArgumentExceptions(IllegalArgumentException ex) {
         List<String> errors = List.of(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(RuntimeException ex) {
+    public ResponseEntity<ErrorResponse> handleRuntimeExceptions(RuntimeException ex) {
         List<String> errors = List.of(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(

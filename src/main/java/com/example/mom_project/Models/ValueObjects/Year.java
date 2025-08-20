@@ -1,18 +1,25 @@
 package com.example.mom_project.Models.ValueObjects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.util.Calendar;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 @Embeddable
 public class Year {
     
+    @Column(nullable=false, name = "year")
     private int year;
+
+    protected Year(){}
 
     public Year(int year) {
         verifyYear(year);
         this.year = year;
     }
 
+    @JsonValue
     public int getYear() {
         return year;
     }

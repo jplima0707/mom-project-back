@@ -25,11 +25,9 @@ public class Car {
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
-    @Column(nullable=false, name = "year")
     @Embedded
     private Year year;
 
-    @Column(nullable=true, length=10, name = "plate")
     @Embedded
     private Plate plate;
 
