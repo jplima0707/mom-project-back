@@ -1,7 +1,5 @@
 package com.example.mom_project.Controllers.ControllerAdvice;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,12 +13,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleArgumentExceptions(IllegalArgumentException ex) {
-        List<String> errors = List.of(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
-                "Invalid argument",
-                errors
+                ex.getMessage()
         );
 
         return ResponseEntity.badRequest().body(response);
@@ -28,12 +24,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeExceptions(RuntimeException ex) {
-        List<String> errors = List.of(ex.getMessage());
 
         ErrorResponse response = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
-                "Object not found",
-                errors
+                ex.getMessage()
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -43,11 +37,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
-                "Validation failed",
-                ex.getBindingResult().getFieldErrors()
-                        .stream()
-                        .map(err -> err.getField() + ": " + err.getDefaultMessage())
-                        .toList()
+                ex.getMessage()
         );
         return ResponseEntity.badRequest().body(error);
     }
@@ -56,8 +46,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         ErrorResponse response = new ErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Unexpected error",
-                List.of(ex.getMessage())
+                ex.getMessage()
         );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
