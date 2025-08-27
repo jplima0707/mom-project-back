@@ -1,11 +1,8 @@
 package com.example.mom_project.Models.ValueObjects;
 
-<<<<<<< Updated upstream
-=======
 import com.example.mom_project.Models.Exceptions.ValueObjectException;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
->>>>>>> Stashed changes
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
@@ -19,16 +16,10 @@ public class Plate {
 
     protected Plate(){}
 
-<<<<<<< Updated upstream
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public Plate(String plate) {
         if (plate.trim().length() < 7 || plate.trim().length() > 10) {
-            throw new IllegalArgumentException("Plate number must be between 7 and 10 characters");
-=======
-    @JsonCreator
-    public Plate(@JsonProperty("plate") String plate) {
-        if (plate.trim().length() < 7 || plate.trim().length() > 10) {
             throw new ValueObjectException("Plate number must be between 7 and 10 characters");
->>>>>>> Stashed changes
         }
         this.plate = plate;
     }

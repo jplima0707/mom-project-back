@@ -1,5 +1,7 @@
 package com.example.mom_project.Models.ValueObjects;
 
+import com.example.mom_project.Models.Exceptions.ValueObjectException;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
@@ -13,9 +15,10 @@ public class PhoneNumber {
 
     protected PhoneNumber(){}
 
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)    
     public PhoneNumber(String phoneNumber) {
         if (phoneNumber.trim().length() < 10 || phoneNumber.trim().length() > 15) {
-            throw new IllegalArgumentException("Phone number must be between 10 and 15 digits");
+            throw new ValueObjectException("Phone number must be between 10 and 15 digits");
         }
         this.phoneNumber = phoneNumber;
     }

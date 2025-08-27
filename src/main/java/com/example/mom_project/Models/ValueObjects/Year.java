@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.util.Calendar;
 
+import com.example.mom_project.Models.Exceptions.ValueObjectException;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 @Embeddable
@@ -14,6 +16,7 @@ public class Year {
 
     protected Year(){}
 
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public Year(int year) {
         verifyYear(year);
         this.year = year;
@@ -26,7 +29,7 @@ public class Year {
 
     private void verifyYear(int year) throws IllegalArgumentException {
         if (year < 1800 || year > Calendar.getInstance().get(Calendar.YEAR)+1) {
-            throw new IllegalArgumentException("Invalid year. Year must be between 1800 and " + (Calendar.getInstance().get(Calendar.YEAR)+1) + ".");
+            throw new ValueObjectException("Invalid year. Year must be between 1800 and " + (Calendar.getInstance().get(Calendar.YEAR)+1) + ".");
         }
     }
 }

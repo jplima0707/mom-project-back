@@ -1,9 +1,7 @@
 package com.example.mom_project.Models.ValueObjects;
 
-import com.example.mom_project.Models.Exceptions.EmailException;
 import com.example.mom_project.Models.Exceptions.ValueObjectException;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import jakarta.persistence.Column;
@@ -17,8 +15,8 @@ public class Email {
 
     protected Email(){}
 
-    @JsonCreator
-    public Email(@JsonProperty("email") String email) {
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public Email(String email) {
         if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
             throw new ValueObjectException("Email not valid");
         }

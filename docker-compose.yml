@@ -1,7 +1,6 @@
-version: '3.8'
 services:
   postgres:
-    image: postgres:15
+    image: postgres:last
     container_name: mom-postgres
     restart: always
     environment:
