@@ -1,15 +1,13 @@
-package com.example.mom_project.DTOs;
+package com.example.mom_project.DTOs.User;
 
 import com.example.mom_project.Models.ValueObjects.Email;
+import com.example.mom_project.Models.ValueObjects.Password;
 
-public class UserDTO {
-    private Long id;
+
+public class UserCreateDTO {
     private String name;
     private Email email;
-
-    public Long getId() {
-        return id;
-    }
+    private Password password;
 
     public String getName() {
         return name;
@@ -19,8 +17,8 @@ public class UserDTO {
         return email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Password getPassword() {
+        return password;
     }
 
     public void setName(String name) {
@@ -29,6 +27,10 @@ public class UserDTO {
 
     public void setEmail(Email email) {
         this.email = email;
+    }
+
+    public void setPassword(Password password) {
+        this.password = password;
     }
 
 }

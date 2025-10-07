@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.mom_project.DTOs.UserCreateDTO;
-import com.example.mom_project.DTOs.UserDTO;
+import com.example.mom_project.DTOs.User.UserCreateDTO;
+import com.example.mom_project.DTOs.User.UserDTO;
+import com.example.mom_project.DTOs.User.UserUpdateDTO;
 import com.example.mom_project.Models.User;
 import com.example.mom_project.Repositories.UserRepository;
 import com.example.mom_project.Mappers.UserMapper;
@@ -48,12 +49,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User updateUser(Long id, UserCreateDTO userCreateDTO) {
+    public UserDTO updateUser(Long id, UserUpdateDTO user) {
         User existingUser = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        User updatedUser = UserMapper.toEntity(userCreateDTO);
+        List<Client> clients = ClientRepository.findAllById(user.getClientsIds());
+        User updatedUser = UserMapper.toEntity(user);
         updatedUser.setId(existingUser.getId());
+        updatedUser.setPassword(existingUser.getPassword());
         userRepository.save(updatedUser);
-        return updatedUser;
+        return UserMapper.toDTO(updatedUser);
     }
     
 }

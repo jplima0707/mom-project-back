@@ -1,8 +1,13 @@
 package com.example.mom_project.Mappers;
 
-import com.example.mom_project.DTOs.UserCreateDTO;
-import com.example.mom_project.DTOs.UserDTO;
+import java.util.List;
+
+import com.example.mom_project.DTOs.User.UserCreateDTO;
+import com.example.mom_project.DTOs.User.UserDTO;
+import com.example.mom_project.DTOs.User.UserUpdateDTO;
+import com.example.mom_project.Models.Client;
 import com.example.mom_project.Models.User;
+import com.example.mom_project.Repositories.ClientRepository;
 
 public class UserMapper {
     
@@ -42,4 +47,15 @@ public class UserMapper {
         return user;
     }
 
+    public static User toEntity(UserUpdateDTO userUpdateDTO, List<Client> clients) {
+        if (userUpdateDTO == null) {
+            return null;
+        }
+
+        User user = new User();
+        user.setName(userUpdateDTO.getName());
+        user.setEmail(userUpdateDTO.getEmail());
+        user.setClients(clients);
+        return user;
+    }
 }

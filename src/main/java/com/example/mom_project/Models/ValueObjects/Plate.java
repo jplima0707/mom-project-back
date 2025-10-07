@@ -2,9 +2,7 @@ package com.example.mom_project.Models.ValueObjects;
 
 import com.example.mom_project.Models.Exceptions.ValueObjectException;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
